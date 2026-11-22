@@ -335,7 +335,7 @@ DeepSeek key、大号 QQ 号、要不要进群，**到用的那一步再要**（
 
 他先装好 DeepSeek Harness（或 WorkBuddy），新开对话粘这一句（资料文档和仓库 README 里都有）：
 
-> 帮我装一个叫 dafeiyu-install 的技能，装好直接用它帮我装大肥鱼：从 https://gh.dpik.top/https://github.com/zexuanw958-svg/dafeiyu-config-pack/releases/latest/download/dafeiyu-install.zip 下载压缩包（下不动就去掉开头的 https://gh.dpik.top/ 再试），解压后把里面的 dafeiyu-install 文件夹放进你读技能的文件夹（DeepSeek Harness 是 %USERPROFILE%\.agents\skills\，WorkBuddy 是 %USERPROFILE%\.workbuddy\skills\，没有就新建；里面已经有 dafeiyu-install 的，先把旧的挪到别处）。放好后读一遍它的 SKILL.md，照着开始。
+> 帮我装一个叫 dafeiyu-install 的技能，装好直接用它帮我装大肥鱼：从 https://raw.githubusercontent.com/InferMaster/dafeiyu-install/main/dafeiyu-install.zip 下载压缩包（下到的是网页而不是 zip 就换 https://github.com/InferMaster/dafeiyu-install/raw/main/dafeiyu-install.zip 再试），解压后把里面的 dafeiyu-install 文件夹放进你读技能的文件夹（DeepSeek Harness 是 %USERPROFILE%\.agents\skills\，WorkBuddy 是 %USERPROFILE%\.workbuddy\skills\，没有就新建；里面已经有 dafeiyu-install 的，先把旧的挪到别处）。放好后读一遍它的 SKILL.md，照着开始。
 
 - 10-28 DeepSeek Harness 桌面版实测：两三分钟装好接着体检，点一次「允许一次」（往工作区外面写文件要提权）。它的沙盒里 `curl`、`Invoke-WebRequest` 连 HTTPS 会失败（SEC_E_NO_CREDENTIALS），`node` 的 fetch 能下，它会自己换着试。
 - 技能文件夹里别留改了名的旧副本（`dafeiyu-install.旧-…` 这种）：Agent 会把两份同名 Skill 都读进来。旧的挪到 `<工作目录>\旧版\` 或者别处。
@@ -343,12 +343,12 @@ DeepSeek key、大号 QQ 号、要不要进群，**到用的那一步再要**（
 
 ## 更新这个 Skill（他说「更新大肥鱼」「更新一下 Skill」，或者工作台提示有新版）
 
-新版发在 GitHub `zexuanw958-svg/dafeiyu-config-pack` 的 Releases，最新一版固定在 `https://github.com/zexuanw958-svg/dafeiyu-config-pack/releases/latest/download/` 下面两个文件：`skill-version.json`（版本号、`notes` 改了什么、`reimport` 要重新导入哪几块）和 `dafeiyu-install.zip`（里面带同一版的配置包）。前面加 `https://gh.dpik.top/` 这类加速地址也能下。
+新版发在 GitHub `InferMaster/dafeiyu-install` 仓库的 main 分支根目录，固定在 `https://raw.githubusercontent.com/InferMaster/dafeiyu-install/main/` 下面几个文件：`skill-version.json`（版本号、`notes` 改了什么、`reimport` 要重新导入哪几块）、`dafeiyu-install.zip`（里面带同一版的配置包）和 `SKILL.md`（最新说明，网页版在 `https://github.com/InferMaster/dafeiyu-install/blob/main/SKILL.md`）。下到网页而不是 zip 时，把 raw 地址换成 `https://github.com/InferMaster/dafeiyu-install/raw/main/`。前面加 `https://gh.dpik.top/` 这类加速地址也能下。
 
 **先让他用工作台**：「更新」页「安装 Skill 和工作台」那行点「一键更新」，它自己下载、备份、换 Skill 和配置包、重跑收尾、重开工作台，半分钟左右；要重新导入的，它更新完会告诉他怎么跟你说。工作台版本低于 1.1（测试版 1 装的）没有这个按钮，才照下面手动换：
 
 1. 查新版：下 `skill-version.json`，跟本 Skill 的 `version.json` 比版本号。跟他说一句新版改了什么（`notes`），他点头再更新。
-2. 下载：先 `. "<S>\common.ps1"`，再 `Get-GitHubFile -Url https://github.com/zexuanw958-svg/dafeiyu-config-pack/releases/latest/download/dafeiyu-install.zip -OutFile <工作目录>\downloads\dafeiyu-install-新版.zip -MinBytes 100000`（会自己走加速地址）。解压到 `<工作目录>\downloads\skill-新版\`，确认有 `dafeiyu-install\SKILL.md`、`dafeiyu-install\version.json` 和 `dafeiyu-install\pack\dafeiyu-config-pack\tools\import_dafeiyu.py`。
+2. 下载：先 `. "<S>\common.ps1"`，再 `Get-GitHubFile -Url https://raw.githubusercontent.com/InferMaster/dafeiyu-install/main/dafeiyu-install.zip -OutFile <工作目录>\downloads\dafeiyu-install-新版.zip -MinBytes 100000`（会自己走加速地址；下到网页就换 `https://github.com/InferMaster/dafeiyu-install/raw/main/dafeiyu-install.zip`）。解压到 `<工作目录>\downloads\skill-新版\`，确认有 `dafeiyu-install\SKILL.md`、`dafeiyu-install\version.json` 和 `dafeiyu-install\pack\dafeiyu-config-pack\tools\import_dafeiyu.py`。
 3. 备份：建 `<工作目录>\旧版\<月日-时分>\`，把旧的技能文件夹（WorkBuddy 也装了的话那份一起）、`<工作目录>\dafeiyu-config-pack`、`<工作目录>\tools` 拷进去。
 4. 换：删掉技能文件夹里旧的 `dafeiyu-install`，放新的；`<工作目录>\dafeiyu-config-pack` 换成新 Skill 里的 `pack\dafeiyu-config-pack`，旧包里有 `voice\breeze`（做声音留的参考音和原录音）的拷回新包同一位置；跑新 Skill 的 `finish.ps1 -Dir <工作目录>`（换工作台、记下新版本号，开机自启和快捷方式照旧）。
 5. 要不要重新导入：只按 `reimport` 来（比如有 `plugins` 就跑 `import-pack.ps1 -Dir <工作目录> -Only plugins`）；空的就不导，人设、记忆、聊天记录都不动。他自己改过人设的，导 `core` 前先问他。
